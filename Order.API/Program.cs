@@ -34,7 +34,6 @@ app.MapPost("/create-order", async (CreateOrderVM model, OrderDbContext orderDbC
     };
 
     await orderDbContext.Orders.AddAsync(order);
-    await orderDbContext.SaveChangesAsync();
 
     var idempotentToken = Guid.NewGuid();
     OrderCreatedEvent orderCreatedEvent = new()
@@ -61,7 +60,6 @@ app.MapPost("/create-order", async (CreateOrderVM model, OrderDbContext orderDbC
     };
     await orderDbContext.OrderOutboxes.AddAsync(orderOutbox);
     await orderDbContext.SaveChangesAsync();
-    
 });
 
 app.Run();
